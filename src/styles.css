@@ -1,0 +1,224 @@
+/* Base Styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* App Container */
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+/* Search Input */
+.search-input {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #f99752;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Dropdowns (Sort/Filter) */
+.dropdown {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Clear Button */
+.btn-clear {
+  padding: 8px 12px;
+  background-color: #999;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Note Form */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.note-form input,
+.note-form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.note-form button {
+  background: #81aed2;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.note-form button:hover,
+.btn-clear:hover {
+  background: #5a91c7;
+}
+
+/* Notes Table Layout */
+.note-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.note-table th,
+.note-table td {
+  border: 1px solid #ddd;
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.note-table th {
+  background-color: #eaeef3;
+  font-weight: bold;
+}
+
+.note-table tr:hover {
+  background-color: #f2f8ff;
+}
+
+/* Buttons in Table */
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn-view {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Note Card (if used in future) */
+.note-card {
+  background: #e6f0fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.note-card h3,
+.note-card p {
+  color: #222;
+}
+
+/* Responsive Table for Mobile */
+@media (max-width: 600px) {
+  .note-table thead {
+    display: none;
+  }
+
+  .note-table, .note-table tbody, .note-table tr, .note-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .note-table tr {
+    margin-bottom: 12px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .note-table td {
+    padding: 10px;
+    border: none;
+    position: relative;
+  }
+
+  .note-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+    color: #555;
+  }
+}
