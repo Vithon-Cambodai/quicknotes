@@ -11,7 +11,7 @@ const App = () => {
   const [sortOption, setSortOption] = useState('');
   const [filterColor, setFilterColor] = useState('');
 
-  // Load notes from localStorage
+  // Load notes from localStorage on start
   useEffect(() => {
     const storedNotes = localStorage.getItem('quicknotes');
     if (storedNotes) {
@@ -19,7 +19,7 @@ const App = () => {
     }
   }, []);
 
-  // Save notes to localStorage
+  // Save notes to localStorage when updated
   useEffect(() => {
     localStorage.setItem('quicknotes', JSON.stringify(notes));
   }, [notes]);
@@ -30,28 +30,24 @@ const App = () => {
       setNotes(notes.map(n => n.id === note.id ? note : n));
       setEditingNote(null);
     } else {
-      // Add createdAt for proper sorting
       const newNote = { ...note, createdAt: new Date().toISOString() };
       setNotes([newNote, ...notes]);
     }
   };
 
-  // Delete note
   const deleteNote = (id) => {
     setNotes(notes.filter(note => note.id !== id));
   };
 
-  // Edit note
   const handleEditNote = (note) => {
     setEditingNote(note);
   };
 
-  // View note
   const handleViewNote = (note) => {
     setViewingNote(note);
   };
 
-  // Filter + Search + Sort
+  // Filter, Search and Sort notes
   let filteredNotes = notes.filter(note =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     note.content.toLowerCase().includes(searchQuery.toLowerCase())
@@ -87,36 +83,44 @@ const App = () => {
           />
         </div>
 
-        {/* Sort + Filter */}
+        {/* Sort + Filter + Clear */}
         <div style={{ display: 'flex', gap: '10px', marginTop: '10px', flexWrap: 'wrap' }}>
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="dropdown"
-          >
+          <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} className="dropdown">
             <option value="">Sort</option>
             <option value="az">A → Z</option>
             <option value="za">Z → A</option>
             <option value="newest">Newest First</option>
           </select>
 
-          <select
-            value={filterColor}
-            onChange={(e) => setFilterColor(e.target.value)}
-            className="dropdown"
-          >
+          <select value={filterColor} onChange={(e) => setFilterColor(e.target.value)} className="dropdown">
             <option value="">Filter by Color</option>
-            <option value="#e6f0fa">Default (Blue)</option>
+            <option value="#e6f0fa">Blue</option>
             <option value="#f9c74f">Yellow</option>
             <option value="#f94144">Red</option>
             <option value="#90be6d">Green</option>
+            <option value="#577590">Steel Blue</option>
+            <option value="#f9844a">Orange</option>
+            <option value="#43aa8b">Mint Green</option>
+            <option value="#9d4edd">Purple</option>
+            <option value="#ff6f61">Coral</option>
           </select>
+
+          <button
+            onClick={() => {
+              setSearchQuery('');
+              setSortOption('');
+              setFilterColor('');
+            }}
+            className="btn-clear"
+          >
+            Clear Filters
+          </button>
         </div>
 
-        {/* Form */}
+        {/* Note Form */}
         <NoteForm onAddNote={addNote} existingNote={editingNote} />
 
-        {/* Notes List */}
+        {/* Note List */}
         <NoteList
           notes={filteredNotes}
           onDeleteNote={deleteNote}
@@ -151,31 +155,31 @@ const App = () => {
               className="note-form"
             >
               <input
-                type="color"
-                value={editingNote.color || '#f9c74f'}
-                onChange={(e) =>
-                  setEditingNote({ ...editingNote, color: e.target.value })
-                }
-                style={{ marginLeft: '10px' }}
+                type="text"
+                value={editingNote.title}
+                onChange={(e) => setEditingNote({ ...editingNote, title: e.target.value })}
               />
-
-
               <textarea
                 value={editingNote.content}
-                onChange={(e) =>
-                  setEditingNote({ ...editingNote, content: e.target.value })
-                }
+                onChange={(e) => setEditingNote({ ...editingNote, content: e.target.value })}
               />
               <label>
                 Choose Color:
-                <input
-                  type="color"
+                <select
                   value={editingNote.color || '#e6f0fa'}
-                  onChange={(e) =>
-                    setEditingNote({ ...editingNote, color: e.target.value })
-                  }
+                  onChange={(e) => setEditingNote({ ...editingNote, color: e.target.value })}
                   style={{ marginLeft: '10px' }}
-                />
+                >
+                  <option value="#e6f0fa">Blue</option>
+                  <option value="#f9c74f">Yellow</option>
+                  <option value="#f94144">Red</option>
+                  <option value="#90be6d">Green</option>
+                  <option value="#577590">Steel Blue</option>
+                  <option value="#f9844a">Orange</option>
+                  <option value="#43aa8b">Mint Green</option>
+                  <option value="#9d4edd">Purple</option>
+                  <option value="#ff6f61">Coral</option>
+                </select>
               </label>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                 <button type="submit" className="edit-btn">Save</button>

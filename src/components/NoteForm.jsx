@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const NoteForm = ({ onAddNote, existingNote }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [color, setColor] = useState('#f9c74f');
+  const [color, setColor] = useState('#f9c74f'); // default color
 
   useEffect(() => {
     if (existingNote) {
@@ -49,16 +49,28 @@ const NoteForm = ({ onAddNote, existingNote }) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
+
       <label>
         Choose Color:
-        <input
-          type="color"
+        <select
           value={color}
           onChange={(e) => setColor(e.target.value)}
-          style={{ marginLeft: '10px' }}
-        />
+          style={{ marginLeft: '10px', padding: '6px', borderRadius: '6px' }}
+        >
+          <option value="#f9c74f">Default (Yellow)</option>
+          <option value="#f94144">Red</option>
+          <option value="#90be6d">Green</option>
+          <option value="#577590">Steel Blue</option>
+          <option value="#f9844a">Orange</option>
+          <option value="#43aa8b">Mint Green</option>
+          <option value="#9d4edd">Purple</option>
+          <option value="#ff6f61">Coral</option>
+        </select>
       </label>
-      <button type="submit">{existingNote ? 'Update Note' : 'Save Note'}</button>
+
+      <button type="submit">
+        {existingNote ? 'Update Note' : 'Save Note'}
+      </button>
     </form>
   );
 };
